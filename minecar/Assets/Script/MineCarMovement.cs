@@ -16,12 +16,13 @@ public class MineCarMovement : MonoBehaviour
     public float maxSpeed = 0f;
     protected float currentSpeed;
     
-    enum direction{
+    enum direction
+    {
         FORWARD  = true,
         BACKWARD = false,
         LEFT = true,
         RIGHT = false
-    };
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -54,11 +55,13 @@ public class MineCarMovement : MonoBehaviour
             connector.transform.rotation = hit.collider.gameObject.transform.rotation;
             connector.transform.Rotate(-90, 0, 0, Space.Self);
         }
+    }
     
     void MinecarControlInput(){
         if(Input.GetKey("w")){
             ForwardControl(FORWARD);
          }
+
          else if(Input.GetKey("s")){
              ForwardControl(BACKWARD);
          }
@@ -79,7 +82,7 @@ public class MineCarMovement : MonoBehaviour
         if(!forward){
             directionSelection = -1;
         }
-        connector.transform.position =  connector.transform.position +  connector.transform.forward * Time.deltaTime * acceleration * directionSelection;
+        connector.transform.position = connector.transform.position +  connector.transform.forward * Time.deltaTime * acceleration * directionSelection;
     }
 
     void LeftRightControl(bool right){
