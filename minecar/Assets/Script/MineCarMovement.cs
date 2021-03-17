@@ -17,6 +17,12 @@ public class MineCarMovement : MonoBehaviour
     public float maxSpeed = 0f;
     protected float currentSpeed;
     
+    enum direction{
+        FORWARD  = true,
+        BACKWARD = false,
+        LEFT = true,
+        RIGHT = false
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -32,10 +38,13 @@ public class MineCarMovement : MonoBehaviour
     void Update()
     {
         MinecarControlInput(); 
-        RayCheck();
+        AlignWithRail();
     }
 
-    void RayCheck(){
+    // This method sends a raycast upwards to check for a rail.
+    // Once detected, we align the car with the rotation of the rail.
+    // This allows us keep our control direction sane and easy to understand.
+    void AlignWithRail(){
         line.SetPosition(0, rb.position);
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.up, out hit, 10f)){
@@ -46,23 +55,21 @@ public class MineCarMovement : MonoBehaviour
             connector.transform.rotation = hit.collider.gameObject.transform.rotation;
             connector.transform.Rotate(-90, 0, 0, Space.Self);
         }
-    }
-
-    //This method is responsible for the user input that moves the mine car.
+    
     void MinecarControlInput(){
         if(Input.GetKey("w")){
-            ForwardControl(true);
+            ForwardControl(FORWARD);
          }
          else if(Input.GetKey("s")){
-             ForwardControl(false);
+             ForwardControl(BACKWARD);
          }
             
         else if(Input.GetKey("a")){
-             LeftRightControl(false);
+             LeftRightControl(LEFT);
         }
 
         else if(Input.GetKey("d")){
-            LeftRightControl(true);
+            LeftRightControl(RIGHT);
         }
     }
     
