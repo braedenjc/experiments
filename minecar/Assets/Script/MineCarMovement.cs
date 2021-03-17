@@ -12,7 +12,6 @@ public class MineCarMovement : MonoBehaviour
 
     private GameObject connector;
 
-
     public float acceleration = 0f;
     public float maxSpeed = 0f;
     protected float currentSpeed;
@@ -80,11 +79,7 @@ public class MineCarMovement : MonoBehaviour
         if(!forward){
             directionSelection = -1;
         }
-        //transform.position = transform.position + transform.forward * Time.deltaTime * acceleration * directionSelection;
         connector.transform.position =  connector.transform.position +  connector.transform.forward * Time.deltaTime * acceleration * directionSelection;
-        //hinge.connectedAnchor = hinge.connectedAnchor + transform.position * Time.deltaTime * acceleration * directionSelection;
-
-
     }
 
     void LeftRightControl(bool right){
