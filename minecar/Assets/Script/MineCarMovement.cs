@@ -10,7 +10,7 @@ public class MineCarMovement : MonoBehaviour
     private LineRenderer line;
     private HingeJoint hinge;
 
-    private GameObject connector;
+    public GameObject connector;
 
     public float acceleration = 0f;
     public float maxSpeed = 0f;
@@ -29,7 +29,7 @@ public class MineCarMovement : MonoBehaviour
     {
         hinge = GetComponent<HingeJoint>();
         rb = GetComponent<Rigidbody>();
-        connector = GameObject.Find("CartRailConnector");
+        //connector = GameObject.Find("CartRailConnector");
         railLocation = GameObject.Find("Rail").transform;
         line = this.GetComponent<LineRenderer>();      
     }
