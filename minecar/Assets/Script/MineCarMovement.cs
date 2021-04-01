@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +18,10 @@ public class MineCarMovement : MonoBehaviour
     
     enum direction
     {
-        FORWARD  = true,
-        BACKWARD = false,
-        LEFT = true,
-        RIGHT = false
+        FORWARD  = 0,
+        BACKWARD = 1,
+        LEFT = 0,
+        RIGHT = 1
     }
 
     // Start is called before the first frame update
@@ -59,35 +59,35 @@ public class MineCarMovement : MonoBehaviour
     
     void MinecarControlInput(){
         if(Input.GetKey("w")){
-            ForwardControl(FORWARD);
+            ForwardControl(direction.FORWARD);
          }
 
          else if(Input.GetKey("s")){
-             ForwardControl(BACKWARD);
+             ForwardControl(direction.BACKWARD);
          }
             
         else if(Input.GetKey("a")){
-             LeftRightControl(LEFT);
+             LeftRightControl(direction.LEFT);
         }
 
         else if(Input.GetKey("d")){
-            LeftRightControl(RIGHT);
+            LeftRightControl(direction.RIGHT);
         }
     }
     
     //Forward control is responsible for putting the minecart into forward or reverse gear.
-    //The bool parameter controls a selector that will change the direction by simple multiplication.
-    void ForwardControl(bool forward){
+    //The direction parameter controls a selector that will change the direction by simple multiplication.
+    void ForwardControl(direction selection){
         int directionSelection = 1;
-        if(!forward){
+        if(selection == direction.BACKWARD){
             directionSelection = -1;
         }
         connector.transform.position = connector.transform.position +  connector.transform.forward * Time.deltaTime * acceleration * directionSelection;
     }
 
-    void LeftRightControl(bool right){
+    void LeftRightControl(direction selection){
         int directionSelection = 1;
-        if(!right){
+        if(selection == direction.LEFT){
             directionSelection = -1;
         }
         transform.position = transform.position + transform.right * Time.deltaTime * acceleration * directionSelection;
