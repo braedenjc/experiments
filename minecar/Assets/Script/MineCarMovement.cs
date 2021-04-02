@@ -8,12 +8,14 @@ public class MineCarMovement : MonoBehaviour
     private Transform railLocation;
     private Rigidbody rb;
     private LineRenderer line;
-    private HingeJoint hinge;
+    private BoxCollider boxConnectorCollider;
 
     public GameObject connector;
 
     public float acceleration = 0f;
     public float maxSpeed = 0f;
+
+    public bool alignUsingRay;
     protected float currentSpeed;
     
     enum direction
@@ -27,11 +29,12 @@ public class MineCarMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hinge = GetComponent<HingeJoint>();
         rb = GetComponent<Rigidbody>();
-        //connector = GameObject.Find("CartRailConnector");
         railLocation = GameObject.Find("Rail").transform;
-        line = this.GetComponent<LineRenderer>();      
+        line = this.GetComponent<LineRenderer>();
+        if(connector == null){
+            Debug.Log("There is no set connector for the minecar to use!");
+        }     
     }
 
     // Update is called once per frame
@@ -41,10 +44,17 @@ public class MineCarMovement : MonoBehaviour
         AlignWithRail();
     }
 
+    //Align the car using either of two detection methods.
+    void AlignWithRail(){
+        if(alignUsingRay){
+            AlignUsingRaycast();
+        }
+    }
+
     // This method sends a raycast upwards to check for a rail.
     // Once detected, we align the car with the rotation of the rail.
-    // This allows us keep our control direction sane and easy to understand.
-    void AlignWithRail(){
+    // Else, we use the box collider.
+    void AlignUsingRaycast(){        
         line.SetPosition(0, rb.position);
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.up, out hit, 10f)){
@@ -55,6 +65,7 @@ public class MineCarMovement : MonoBehaviour
             connector.transform.rotation = hit.collider.gameObject.transform.rotation;
             connector.transform.Rotate(-90, 0, 0, Space.Self);
         }
+    
     }
     
     void MinecarControlInput(){
