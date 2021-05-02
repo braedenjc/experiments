@@ -158,8 +158,9 @@ MonoBehaviour:
   player: {fileID: 1885365596}
   viewport: {fileID: 963194227}
   positionOffset: {x: 0, y: -2, z: 0}
+  mouseMovementSensitivity: 0.25
   radius: 2
-  xLimit: 2
+  xLimit: 4
 --- !u!65 &333708180
 BoxCollider:
   m_ObjectHideFlags: 0

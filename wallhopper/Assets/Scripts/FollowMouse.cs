@@ -8,6 +8,7 @@ public class FollowMouse : MonoBehaviour
     public Camera viewport;
     public Vector3 positionOffset;
 
+    public float mouseMovementSensitivity; 
     public float radius;
     public float xLimit;
 
@@ -33,24 +34,33 @@ public class FollowMouse : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         Vector3 localMousePosition = viewport.ScreenToWorldPoint(mousePosition);
 
-        float angle = Vector3.Angle(playerPosition, localMousePosition);
+        float angle = Vector3.Angle(Vector3.right, localMousePosition) * mouseMovementSensitivity;
         float x = Mathf.Cos(angle) * radius;
         float y = Mathf.Sin(angle) * radius;
-        if(y < 0){
-            y = 0;
-            if (x < 0){
-               x = -xLimit;
+        if(localMousePosition.x < xLimit && localMousePosition.x > -xLimit){
+            if(y < 0){
+                y = 0;
+                if (x < 0){
+                x = -xLimit;
+                }
+                if (x > 0){
+                    x = xLimit;
+                }
             }
-            if (x > 0){
-                x = xLimit;
+
+            if(x >= xLimit){
+                x = radius;
             }
+
+            if(x <= -xLimit){
+                x = -radius;
+            }
+        
+            Vector3 newPosition = new Vector3(x, y, 0) + positionOffset;
+            transform.position = newPosition; 
         }
 
-        if(x > xLimit){
-            x = xLimit;
-        }
-        Vector3 newPosition = new Vector3(x, y, 0) + positionOffset;
-        transform.position = newPosition;
+            Debug.Log(localMousePosition);
 
     }
 }
