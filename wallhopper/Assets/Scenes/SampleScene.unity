@@ -157,10 +157,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1885365596}
   viewport: {fileID: 963194227}
-  positionOffset: {x: 0, y: -2, z: 0}
-  mouseMovementSensitivity: 0.25
+  positionOffset: {x: 0, y: 0, z: 0}
   radius: 2
-  xLimit: 4
+  calculatedRadius: 0
+  sqrtCR: 0
+  lowerMouseVerticalMovementLimit: -2
 --- !u!65 &333708180
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -461,6 +462,7 @@ MonoBehaviour:
   repeatRate: 5
   spawnLocation: {x: 5, y: 13, z: 0}
   wall: {fileID: 8403818844322252569, guid: f60a3044a6f91725f980fb2f8c95b3ad, type: 3}
+  isWallSpawningOnLeft: 1
 --- !u!4 &1192591945
 Transform:
   m_ObjectHideFlags: 0

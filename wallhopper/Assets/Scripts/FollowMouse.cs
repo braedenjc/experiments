@@ -7,10 +7,10 @@ public class FollowMouse : MonoBehaviour
     public GameObject player;
     public Camera viewport;
     public Vector3 positionOffset;
-
-    public float mouseMovementSensitivity; 
     public float radius;
-    public float xLimit;
+    public float calculatedRadius;
+    public float sqrtCR;
+    public float lowerMouseVerticalMovementLimit; //How far below the player's center we want to move before we stop moving the pointer.
 
     
     // Start is called before the first frame update
@@ -24,43 +24,27 @@ public class FollowMouse : MonoBehaviour
     {
         //This needs some serious cleanup.
         /*Basically, we want to lock the range of movement for our cursor on a half circle above and surrounding the player.
-        * The half circle is around the player. We use this to help our player orient their jump to the next block.
-        * Right now, the code works as follows.
-        * 1) Locate the player, mouse, and cursor/pointer's position. Store them as vectors. Convert the screen location of the mouse to the world location.
-        * 2) Create a rotation where the cursor/pointer will point in the direction of the mouse.
-        * 3) Get the mouse postion, and apply limits to it. Create a new vector, and apply the rotation and mouse-dependant position to the cursor/pointer.
+        * First, we get the player position, and the mouse's world position.
+        * Then, we restrict the movement of the mouse to the +y range of the world, starting at the base of the player.
+        * Plot a circle, and lock out movement on the interior of the circle.
         */
         Vector3 playerPosition = player.transform.position;
         Vector3 mousePosition = Input.mousePosition;
         Vector3 localMousePosition = viewport.ScreenToWorldPoint(mousePosition);
 
-        float angle = Vector3.Angle(Vector3.right, localMousePosition) * mouseMovementSensitivity;
-        float x = Mathf.Cos(angle) * radius;
-        float y = Mathf.Sin(angle) * radius;
-        if(localMousePosition.x < xLimit && localMousePosition.x > -xLimit){
-            if(y < 0){
-                y = 0;
-                if (x < 0){
-                x = -xLimit;
-                }
-                if (x > 0){
-                    x = xLimit;
-                }
-            }
+        //calcuate a circle from a center pointer to act as an exclusion zone. 
+        //We use the player position as the center of the exclusion zone.
+        float x = localMousePosition.x;
+        float y = localMousePosition.y;
+        float h = playerPosition.x;
+        float k = playerPosition.y;
+        float domain = Mathf.Pow(x-h, 2);
+        float range = Mathf.Pow(y-k, 2);
+        calculatedRadius = domain + range;
+        sqrtCR = Mathf.Sqrt(calculatedRadius);
 
-            if(x >= xLimit){
-                x = radius;
-            }
-
-            if(x <= -xLimit){
-                x = -radius;
-            }
-        
-            Vector3 newPosition = new Vector3(x, y, 0) + positionOffset;
-            transform.position = newPosition; 
+        if(localMousePosition.y > playerPosition.y + lowerMouseVerticalMovementLimit && sqrtCR >= radius){
+            transform.position = new Vector3(localMousePosition.x, localMousePosition.y, 0f);
         }
-
-            Debug.Log(localMousePosition);
-
     }
 }
