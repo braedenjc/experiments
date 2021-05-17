@@ -16,7 +16,7 @@ public class FollowMouse : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     // Update is called once per frame
@@ -40,11 +40,19 @@ public class FollowMouse : MonoBehaviour
         float k = playerPosition.y;
         float domain = Mathf.Pow(x-h, 2);
         float range = Mathf.Pow(y-k, 2);
+        Quaternion rotationOfCursor = Quaternion.FromToRotation(localMousePosition, playerPosition);
         calculatedRadius = domain + range;
         sqrtCR = Mathf.Sqrt(calculatedRadius);
 
         if(localMousePosition.y > playerPosition.y + lowerMouseVerticalMovementLimit && sqrtCR >= radius){
+
+            LineRenderer lr = GetComponent<LineRenderer>();
+            lr.startWidth = .1f;
+            lr.endWidth = .1f;
+            lr.startColor = lr.endColor = Color.red;
+            lr.SetPositions(new Vector3[]{playerPosition, transform.position});
             transform.position = new Vector3(localMousePosition.x, localMousePosition.y, 0f);
+            transform.rotation = rotationOfCursor;
         }
     }
 }

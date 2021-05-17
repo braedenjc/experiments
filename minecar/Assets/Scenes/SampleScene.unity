@@ -654,10 +654,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2370876}
     m_Modifications:
+    - target: {fileID: 7774368528887250816, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368528887250816, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: acceleration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368528887250816, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: forwardSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368528887250816, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: horizontalSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7774368528887250818, guid: 372bd8969f3f7820eb5559d7ea983c3c,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.6799999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368528887250819, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368530429602417, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774368530429602417, guid: 372bd8969f3f7820eb5559d7ea983c3c,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7774368530429602422, guid: 372bd8969f3f7820eb5559d7ea983c3c,
         type: 3}

@@ -12,19 +12,13 @@ public class MineCarMovement : MonoBehaviour
 
     public GameObject connector;
 
-    public float acceleration = 0f;
-    public float maxSpeed = 0f;
+    public float acceleration = 1f;
+    public float maxSpeed = 1f;
+    public float forwardSpeed;
+    public float horizontalSpeed;
 
     public bool alignUsingRay;
     protected float currentSpeed;
-    
-    enum direction
-    {
-        FORWARD  = 0,
-        BACKWARD = 1,
-        LEFT = 0,
-        RIGHT = 1
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -69,38 +63,19 @@ public class MineCarMovement : MonoBehaviour
     }
     
     void MinecarControlInput(){
-        if(Input.GetKey("w")){
-            ForwardControl(direction.FORWARD);
-         }
-
-         else if(Input.GetKey("s")){
-             ForwardControl(direction.BACKWARD);
-         }
-            
-        else if(Input.GetKey("a")){
-             LeftRightControl(direction.LEFT);
-        }
-
-        else if(Input.GetKey("d")){
-            LeftRightControl(direction.RIGHT);
-        }
+        ForwardControl();
+        LeftRightControl();
     }
     
     //Forward control is responsible for putting the minecart into forward or reverse gear.
     //The direction parameter controls a selector that will change the direction by simple multiplication.
-    void ForwardControl(direction selection){
-        int directionSelection = 1;
-        if(selection == direction.BACKWARD){
-            directionSelection = -1;
-        }
-        connector.transform.position = connector.transform.position +  connector.transform.forward * Time.deltaTime * acceleration * directionSelection;
+    void ForwardControl(){
+        forwardSpeed = maxSpeed * Input.GetAxis("Vertical");
+        connector.transform.Translate(Vector3.forward * Time.deltaTime * acceleration * forwardSpeed);
     }
 
-    void LeftRightControl(direction selection){
-        int directionSelection = 1;
-        if(selection == direction.LEFT){
-            directionSelection = -1;
-        }
-        transform.position = transform.position + transform.right * Time.deltaTime * acceleration * directionSelection;
+    void LeftRightControl(){
+        horizontalSpeed = maxSpeed * Input.GetAxis("Horizontal");
+        connector.transform.Translate(Vector3.right * Time.deltaTime * acceleration * horizontalSpeed);
     }
 }
